@@ -3,12 +3,21 @@ import mongoose, { models } from "mongoose"
 import {config} from "dotenv";
 config();
 import Deck from "./models/Deck";
+import cors from 'cors';
 
 const PORT = 3000;
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
+
+app.get("/decks", async (req: Request, res: Response) => {
+    // fetch decks and send to user
+    const decks = await Deck.find();
+    console.log(decks);
+    res.json(decks);
+
+});
 
 app.post("/decks", async (req: Request, res: Response) => {
 
@@ -19,9 +28,6 @@ app.post("/decks", async (req: Request, res: Response) => {
     res.json(createdDeck)
 });
 
-app.get("/gg", (req: Request, res: Response) => {
-    res.send("gg")
-});
 
 mongoose.connect(
     process.env.MONGO_URL!
