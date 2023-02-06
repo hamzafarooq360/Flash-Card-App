@@ -28,17 +28,31 @@
 
 .decks li {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  align-content: center;
+  font-size: larger;
+  width: 100%;
   height: 120px;
   background: white;
   border: 1px solid white;
-  color: black;
   border-radius: 10px;
 }
 
-.decks li:hover {
-  background: gray;
+
+.delete-button {
+  align-items: center;
+  width: 10px;
+  height: 20px;
+  font-size: 10px;
+  top: 5px;
+  right: 5px;
+  bottom: 5px;
+  position: absolute;
+  background-color: brown;
 }
 
+.delete-button:hover {
+  transform: scale(1.1);
+}
