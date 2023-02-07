@@ -4,6 +4,10 @@ import {config} from "dotenv";
 config();
 import Deck from "./models/Deck";
 import cors from 'cors';
+import { getDecksController } from "./controllers/getDecksController";
+import { createDeckController } from "./controllers/createDeckController";
+import { deleteDeckController } from "./controllers/deleteDeckController";
+import { createCardforDeckController } from "./controllers/createCardforDeckController";
 
 const PORT = 3000;
 
@@ -11,31 +15,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/decks", async (req: Request, res: Response) => {
-    // fetch decks and send to user
-    const decks = await Deck.find();
-    console.log(decks);
-    res.json(decks);
-
-});
-
-
-
-app.post("/decks", async (req: Request, res: Response) => {
-
-    const newDeck = new Deck({
-        title: req.body.title,
-    });
-    const createdDeck = await newDeck.save();
-    res.json(createdDeck)
-});
-
-app.delete("/decks/:deckId", async (req: Request, res: Response) =>{
-    const deckId = req.params.deckId;
-    const deck = await Deck.findByIdAndDelete(deckId);
-    res.json(deck);
-
-})
+app.get("/decks", getDecksController);
+app.post("/decks", createDeckController);
+app.delete("/decks/:deckId", deleteDeckController);
+app.post("/decks/:deckId/cards", createCardforDeckController)
 
 
 mongoose.connect(
